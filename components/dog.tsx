@@ -6,7 +6,7 @@ type Props = {
   image: string;
 };
 
-const Breeds: React.FC<Props> = ({image}) => {
+const Dog: React.FC<Props> = ({image}) => {
   const [favorites, toggleFavorite] = useFavorite();
 
   return (
@@ -17,11 +17,13 @@ const Breeds: React.FC<Props> = ({image}) => {
         width: 128,
         height: 128,
         objectFit: "cover",
-        border: favorites.includes(image) ? "3px solid red" : "none",
+        borderWidth: 1.5,
+        borderColor: favorites.includes(image) ? "crimson" : "white",
+        borderStyle: "inset",
       }}
       onClick={() => toggleFavorite(image)}
     />
   );
 };
 
-export default Breeds;
+export default Dog;
