@@ -15,7 +15,7 @@ interface Props {
 }
 
 export default function RootLayout({children}: Props) {
-  const favorites = useFavorites((state) => state.favorites);
+  const {favorites} = useFavorites();
 
   return (
     <html className={nunito.className}>

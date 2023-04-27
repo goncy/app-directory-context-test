@@ -3,8 +3,7 @@
 import {useFavorites} from "../state/favorite";
 
 const FavoritableImage = ({src}: {src: string}) => {
-  const favorites = useFavorites((state) => state.favorites);
-  const toggleFavorite = useFavorites((state) => state.toggleFavorite);
+  const {favorites, toggleFavorite} = useFavorites();
   const isFavorite = favorites.includes(src);
 
   return (

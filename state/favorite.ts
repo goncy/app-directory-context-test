@@ -1,22 +1,19 @@
-import create from "zustand";
+import {proxy, subscribe, useSnapshot} from "valtio";
 
 interface State {
   favorites: string[];
   toggleFavorite: (image: string) => void;
 }
 
-export const useFavorites = create<State>((set) => ({
-  favorites: JSON.parse(window?.localStorage?.getItem?.("favorites") || "[]"),
-  toggleFavorite: (image: string) =>
-    set(({favorites}) => {
-      const draft = favorites.includes(image)
-        ? favorites.filter((favorite) => favorite !== image)
-        : favorites.concat(image);
+const state = proxy<State>({
+  favorites: [], // JSON.parse(window?.localStorage?.getItem?.("favorites") || "[]"),
+  toggleFavorite: (image: string) => {
+    const index = state.favorites.indexOf(image);
 
-      window.localStorage.setItem("favorites", JSON.stringify(draft));
+    index > -1 ? state.favorites.splice(index, 1) : state.favorites.push(image);
+  },
+});
 
-      return {
-        favorites: draft,
-      };
-    }),
-}));
+subscribe(state, () => localStorage.setItem("favorites", JSON.stringify(state.favorites)));
+
+export const useFavorites = () => useSnapshot(state);

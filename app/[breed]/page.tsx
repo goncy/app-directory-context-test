@@ -6,6 +6,10 @@ interface Props {
   };
 }
 
+export async function generateStaticParams() {
+  return [{breed: "african"}];
+}
+
 const BreedPage = async ({params: {breed}}: Props) => {
   const {message: images} = await fetch(`https://dog.ceo/api/breed/${breed}/images/random/10`).then(
     (res) => res.json() as Promise<{message: string[]}>,
